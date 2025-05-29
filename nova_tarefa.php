@@ -37,7 +37,7 @@
                         <div class="col">
                             <h4>Nova Tarefa</h4>
                             <hr>
-                            <form method="post" action="tarefa_controller.php">
+                            <form method="post" action="tarefa_controller.php?acao=inserir">
                                 <div class="form-group">
                                     <label for="">Descrição da tarefa:</label>
                                     <input type="text" name="tarefa" id="tarefa" class="form-control" placeholder="Digite a tarefa aqui">
