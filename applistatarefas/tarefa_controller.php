@@ -16,12 +16,14 @@
         $tarefaService->inserir();
     
         header('Location: nova_tarefa.php?inclusao=1');
+
     }elseif($acao == 'recuperar'){
         $tarefa = new Tarefa();
         $conexao = new Conexao();
 
         $tarefaService = new TarefaService($conexao, $tarefa);
         $tarefas = $tarefaService->recuperar();
+
     }elseif($acao == 'atualizar'){
         $tarefa = new Tarefa();
         $tarefa->__set('id', $_POST['id'])->__set('tarefa', $_POST['tarefa']);
@@ -29,8 +31,14 @@
         $conexao = new Conexao();
         $tarefaService = new TarefaService($conexao, $tarefa);
         if($tarefaService->atualizar()){
-            header('Location:todas_tarefas.php');
+            
+            if(isset($_GET['pag']) && $_GET['pag'] == 'index'){
+                header('Location:index.php');
+            }else{
+                header('Location:todas_tarefas.php');
+            }
         }
+
     }elseif($acao == 'remover'){
         $tarefa = new Tarefa();
         $tarefa->__set('id', $_GET['id']);
@@ -39,7 +47,11 @@
 
         $tarefaService = new TarefaService($conexao, $tarefa);
         $tarefaService->remover();
-        header('Location:todas_tarefas.php');
+        if(isset($_GET['pag']) && $_GET['pag'] == 'index'){
+            header('Location:index.php');
+        }else{
+            header('Location:todas_tarefas.php');
+        }
     }elseif($acao == 'marcarRealizada'){
         $tarefa = new Tarefa();
         $tarefa->__set('id', $_GET['id'])->__set('id_status', 2);
@@ -48,6 +60,18 @@
 
         $tarefaService = new TarefaService($conexao, $tarefa);
         $tarefaService->marcarRealizada();
-        header('Location:todas_tarefas.php');
+        if(isset($_GET['pag']) && $_POST['pag'] == 'index'){
+            header('Location:index.php');
+        }else{
+            header('Location:todas_tarefas.php');
+        }
+
+    }elseif($acao == 'recuperarTarefasPendentes'){
+        $tarefa = new Tarefa();
+        $tarefa->__set('id_status', 1);
+        $conexao = new Conexao();
+
+        $tarefaService = new TarefaService($conexao, $tarefa);
+        $tarefas = $tarefaService->recuperarTarefasPendentes();
     }
 ?>
