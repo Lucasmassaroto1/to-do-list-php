@@ -3,9 +3,9 @@
     require 'applistatarefas/tarefa.service.php';
     require 'applistatarefas/conexao.php';
 
-	echo '<pre>';
+	/* echo '<pre>';
 	print_r($_POST);
-	echo '</pre>';
+	echo '</pre>'; */
 
     $tarefa = new Tarefa();
 	$tarefa->__set('tarefa', $_POST['tarefa']);
@@ -15,7 +15,9 @@
     $tarefaService = new TarefaService($conexao, $tarefa);
 	$tarefaService->inserir();
     
-    echo '<pre>';
+    /* echo '<pre>';
 	print_r($tarefaService);
-	echo '</pre>';
+	echo '</pre>'; */
+
+    header('Location: nova_tarefa.php?inclusao=1');
 ?>
